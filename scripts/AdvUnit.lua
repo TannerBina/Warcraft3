@@ -1,6 +1,6 @@
-require("StatHolder")
-require("GlobalIndex")
-require("Globals")
+require("scripts/StatHolder")
+require("scripts/GlobalIndex")
+require("scripts/Globals")
 
 -- Meta class
 AdvUnit = {}

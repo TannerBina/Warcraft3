@@ -1,5 +1,5 @@
-require("AdvPlayer")
-require("AdvUnit")
+require("scripts/AdvPlayer")
+require("scripts/AdvUnit")
 
 function InitTesting()
     BJDebugMsg("---Creating Test Unit---")

@@ -1,4 +1,4 @@
-require("GlobalIndex")
+require("scripts/GlobalIndex")
 
 -- Meta class
 AdvItem = {}
@@ -19,24 +19,6 @@ function AdvItem:New(item, item_def)
     setmetatable(new, self)
     GlobalIndex.items:Put(item, new)
     return new
-end
-
-function AdvItem:EquipTo(adv_unit)
-    for stat, value in pairs(self.item_def) do
-        -- Modify the stats of the adv_unit with the
-        -- corresponding values, then save the coroutine
-        local co = adv_unit.stats:ModifyStat(stat, value)
-        table.insert( self.stat_coroutines, co)
-    end
-end
-
-function AdvItem:UnequipTo(adv_unit)
-    for i, co in ipairs(self.stat_coroutines) do
-        -- Resume each coroutine to take the stats away from the
-        -- corresponding unit again
-        coroutine.resume(co)
-    end
-    self.stat_coroutines = {}
 end
 
 return AdvItem

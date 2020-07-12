@@ -1,4 +1,4 @@
-require("Globals")
+require("scripts/Globals")
 
 -- Meta class.
 TypeIndex = {}
@@ -22,6 +22,11 @@ function TypeIndex:Put(handle, value)
     end
 end
 
+-- Puts an id in the type index table.
+function TypeIndex:PutId(id, value)
+    self[id] = value
+end
+
 -- Returns the value at the input handle's id. 
 -- Returns nil if the handle is not initialized.
 function TypeIndex:Get(handle)
@@ -32,11 +37,17 @@ function TypeIndex:Get(handle)
     end
 end
 
+-- Retruns the value at the specified id
+function TypeIndex:GetId(id)
+    return self[id]
+end
+
 -- Initialize the GlobalIndex table.
 GlobalIndex = {
     units = TypeIndex:New(),
     players = TypeIndex:New(),
     items = TypeIndex:New(),
+    item_types = TypeIndex:New(),
 }
 
 return GlobalIndex

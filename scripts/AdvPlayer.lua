@@ -1,4 +1,4 @@
-require("GlobalIndex")
+require("scripts/GlobalIndex")
 
 -- Meta class
 AdvPlayer = {}

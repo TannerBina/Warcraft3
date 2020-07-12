@@ -1,20 +1,27 @@
-require("AdvUnit")
-require("Globals")
-require("AdvItem")
+require("scripts/AdvHero")
+require("scripts/Globals")
+require("scripts/AdvItem")
+require("scripts/AdvItemType")
 
 Globals.TESTING = true
 
-print("Creating Mock Unit")
-adv_unit = AdvUnit:New("mock_unit")
-print(adv_unit:GetString())
+print("Creating Mock Hero")
+adv_hero = AdvHero:New("mock_hero")
+print(adv_hero:GetString())
+
+print("Creating Mock Item Type")
+adv_item_type = AdvItemType:New(0, "helmet", {
+    strength = 5,
+    constitution = -2,
+})
 
 print("Creating Mock Item")
-adv_item = AdvItem:New("mock_item", {strength = 5, constitution = -3})
+adv_item = AdvItem:New("mock_item", adv_item_type)
 
 print("Equiping Mock Item")
-adv_item:EquipTo(adv_unit)
-print(adv_unit:GetString())
+adv_hero:Equip(adv_item)
+print(adv_hero:GetString())
 
 print("Unequiping Mock Item")
-adv_item:UnequipTo(adv_unit)
-print(adv_unit:GetString())
+adv_hero:Unequip(adv_item)
+print(adv_hero:GetString())
