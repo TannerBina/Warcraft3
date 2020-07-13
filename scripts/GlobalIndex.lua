@@ -42,12 +42,25 @@ function TypeIndex:GetId(id)
     return self[id]
 end
 
+function TypeIndex:Remove(handle)
+    if (Globals.TESTING) then 
+        self[handle] = nil 
+    else 
+        self[GetHandleId(handle)] = nil
+    end
+end
+
+function TypeIndex:RemoveId(id)
+    self[id] = nil 
+end
+
 -- Initialize the GlobalIndex table.
 GlobalIndex = {
     units = TypeIndex:New(),
     players = TypeIndex:New(),
     items = TypeIndex:New(),
     item_types = TypeIndex:New(),
+    timers = TypeIndex:New(),
 }
 
 return GlobalIndex

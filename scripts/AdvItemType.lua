@@ -1,3 +1,5 @@
+require("scripts/GlobalIndex")
+
 -- Meta class
 AdvItemType = {}
 AdvItemType.__index = AdvItemType
