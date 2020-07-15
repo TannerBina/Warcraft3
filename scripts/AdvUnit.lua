@@ -1,6 +1,7 @@
 require("scripts/StatHolder")
 require("scripts/GlobalIndex")
 require("scripts/Globals")
+require("scripts/AdvTimer")
 
 -- Meta class
 AdvUnit = {}
@@ -21,6 +22,57 @@ function AdvUnit:New(base_unit)
 
     GlobalIndex.units:Put(base_unit, new)
     return new
+end
+
+local function SetStats(adv_unit)
+    if (Globals.TESTING == true) then
+        return 
+    end
+
+    local life_percent = GetUnitLifePercent(adv_unit.base_unit)
+    SetUnitLifeBJ(adv_unit.base_unit, GetStat("health"))
+    SetUnitLifePercentBJ(adv_unit.base_unit, life_percent)
+
+    local stam_percent = GetUnitManaPercent(adv_unit.base_unit)
+    SetUnitManaBJ(adv_unit.base_unit, GetStat("stamina"))
+    SetUnitManaPercentBJ(adv_unit.base_unit, stam_percent)
+end
+
+-- Gets the stat of the unit (with modifiers) and returns the stat
+function AdvUnit:GetStat(stat)
+    if (stat == "deflection") then 
+        return stats[stat] + (Globals.MAIN_STAT_MULT * stats["luck"])
+    elseif (stat == "reflex") then
+        return stats[stat] + (Globals.MAIN_STAT_MULT * stats["dexterity"])
+    elseif (stat == "fortitude") then
+        return stats[stat] + (Globals.MAIN_STAT_MULT * stats["strength"])
+    elseif (stat == "will") then
+        return stats[stat] + (Globals.MAIN_STAT_MULT * stats["intelligence"])
+    elseif (stat == "physical_defense") then
+        return stats[stat] + (Globals.MAIN_STAT_MULT * stats["constitution"])
+    elseif (stat == "eldritch_defense") then
+        return stats[stat] + (Globals.MAIN_STAT_MULT * stats["wisdom"])
+    elseif (stat == "stamina") then
+        return stats[stat] + (Globals.MAIN_STAT_MULT * stats["dexterity"])
+    elseif (stat == "health") then
+        return stats[stat] + (4 * stats["constitution"])
+    elseif (stat == "spell_slots") then
+        return stats[stat] + stats["wisdom"]
+    elseif (stat == "accuracy") then
+        return stats[stat] + stats["luck"]
+    elseif (stat == "physical_damage") then
+        return stats[stat] + stats["strength"]
+    elseif (stat == "eldritch_damage") then
+        return stats[stat] + stats["intelligence"]
+    end
+    return stats[stat];
+end
+
+-- Modifys a stat of the unit. After calls SetStats for the units
+-- to verify the stats are set correctly for the unit
+function AdvUnit:ModifyStat(stat, value)
+    local co = self.stats:ModifyStat(stat, value)
+    SetStats(self)
 end
 
 -- Adds the buff to this unit. Returns a coroutine that removes
@@ -69,6 +121,30 @@ function AdvUnit:AddBuff(adv_buff)
     adv_buff.coroutine = co
     coroutine.resume( co )
     return co
+end
+
+-- Local function to remove a buff at an expired timer
+local function RemoveBuff(adv_timer) 
+    local co = adv_timer.buff_coroutine;
+    coroutine.resume(co)
+end
+
+-- Applys a buff to this unit for the specified time.
+-- Note: The time must be a multiple of the input interval
+function AdvUnit:AddTimedBuff(adv_buff, time, interval)
+    adv_buff.permanent = false
+    local co = self:AddBuff(adv_buff)
+    local adv_timer = AdvTimer:New(RemoveBuff)
+    adv_timer.buff_coroutine = co
+    adv_timer:For(time/interval, interval)
+end
+
+-- Applys a permanent buff to this unit.
+-- Note: The id of this buff should be unique this may be removed
+-- from the coroutine of the next buff.
+function AdvUnit:AddPermanentBuff(adv_buff)
+    adv_buff.permanent = true 
+    self:AddBuff(adv_buff)
 end
 
 -- Applies all buffs on the unit that are keyed by the

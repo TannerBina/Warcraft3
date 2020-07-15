@@ -10,7 +10,22 @@ function StatHolder:New()
       intelligence = 0,
       constitution = 0,
       wisdom = 0,
-      charisma = 0,
+      luck = 0,
+
+      deflection = 0,
+      reflex = 0,
+      fortitude = 0,
+      will = 0,
+      physical_defense = 0,
+      eldritch_defense = 0,
+
+      accuracy = 0,
+      physical_damage = 0,
+      eldritch_damage = 0,
+
+      health = 0,
+      stamina = 0,
+      spell_slots = 0,
     }
 
     setmetatable(new, self)
@@ -21,6 +36,7 @@ end
 -- reverts the stat value to the prior value
 function StatHolder:ModifyStat(stat_name, mod)
     local co = coroutine.create( function()
+        print(stat_name)
         self[stat_name] = self[stat_name] + mod
         coroutine.yield()
         self[stat_name] = self[stat_name] - mod

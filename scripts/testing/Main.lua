@@ -62,7 +62,7 @@ adv_buff_2 = AdvBuff:New(0)
 adv_buff_2.level = 2
 adv_buff_2.stats = {
     strength = 12,
-    charisma = 5,
+    luck = 5,
 }
 remaining_duration = 5
 print("---------------")

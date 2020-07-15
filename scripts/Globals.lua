@@ -1,6 +1,7 @@
 Globals = {
     TESTING=false,
     GLOBAL_ID = 0,
+    MAIN_STAT_MULT = 2,
 }
 
 function Globals:GetGlobalId()
