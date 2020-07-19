@@ -39,3 +39,5 @@ end
 function AdvInventory:Unequip(adv_item)
     self[adv_item.item_def.slot] = nil
 end
+
+return AdvInventory

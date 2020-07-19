@@ -5,7 +5,9 @@ end
 -- maps from the profession name to an apply function that takes
 -- in a unit and the level that unit has reached
 ProfessionDict = {
-    soldier = require("scripts/professions/Soldier"),
+    soldier = {
+        apply = soldier_apply
+    }
 }
 
 return ProfessionDict

@@ -5,12 +5,16 @@ AdvPlayer = {}
 AdvPlayer.__index = AdvPlayer
 
 -- Creates a new adv player based on the input player number.
-function AdvPlayer:New(player_num)
+function AdvPlayer:New(player)
     local new = {
       -- contains a reference to the Player.
-      player = Player(player_num),
+      player = player,
       -- contains a reference to the AdvHero of the player
       player_hero = nil,
+      -- contains an array of six stat rolls for the player
+      stat_rolls = nil,
+      -- contains the current index of the stat rolls to assign
+      stat_roll_index = 0,
     }
     setmetatable(new, self)
 

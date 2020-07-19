@@ -36,3 +36,5 @@ end
 function AdvBuff:AddTrigger(trigger_time, trigger_func)
     self.triggers[trigger_time] = trigger_func
 end
+
+return AdvBuff

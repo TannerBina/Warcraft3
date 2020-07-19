@@ -3,6 +3,8 @@ require("scripts/Globals")
 require("scripts/AdvItem")
 require("scripts/AdvItemType")
 require("scripts/AdvBuff")
+require("scripts/AdvPlayer")
+require("scripts/pick_stats/RollStats")
 
 Globals.TESTING = true
 
@@ -80,4 +82,21 @@ print("---------------")
 print("Removing second buff")
 coroutine.resume(co2)
 print(adv_hero:GetString())
+print("---------------")
+
+print("Resetting stats")
+adv_hero:ResetStats()
+print("---------------")
+
+print("Creating Adv Player")
+adv_player = AdvPlayer:New("mock_player")
+print("---------------")
+
+print("Roll stats without hero")
+RollStats()
+print("---------------")
+
+adv_player.player_hero = adv_hero
+print("Roll stats with hero")
+RollStats()
 print("---------------")

@@ -19,3 +19,5 @@ function AdvItemType:New(item_id, item_slot, item_stats)
     GlobalIndex.item_types:PutId(item_id, new)
     return new
 end
+
+return AdvItemType

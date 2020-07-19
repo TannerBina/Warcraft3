@@ -10,3 +10,5 @@ function DamageEvent:New()
     setmetatable(new, self)
     return new
 end
+
+return DamageEvent

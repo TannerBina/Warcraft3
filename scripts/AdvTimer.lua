@@ -73,3 +73,5 @@ function AdvTimer:While(bool_func, timeout)
     self.bool_func = bool_func
     TimeStart(self.base_timer, timeout, true, ExpireWhile)
 end
+
+return AdvTimer

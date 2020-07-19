@@ -30,12 +30,22 @@ local function SetStats(adv_unit)
     end
 
     local life_percent = GetUnitLifePercent(adv_unit.base_unit)
-    SetUnitLifeBJ(adv_unit.base_unit, GetStat("health"))
+    SetUnitLifeBJ(adv_unit.base_unit, adv_unit:GetStat("health"))
     SetUnitLifePercentBJ(adv_unit.base_unit, life_percent)
 
     local stam_percent = GetUnitManaPercent(adv_unit.base_unit)
-    SetUnitManaBJ(adv_unit.base_unit, GetStat("stamina"))
+    SetUnitManaBJ(adv_unit.base_unit, adv_unit:GetStat("stamina"))
     SetUnitManaPercentBJ(adv_unit.base_unit, stam_percent)
+end
+
+function AdvUnit:ResetStats()
+    self.stats = StatHolder:New()
+    SetStats(self)
+end
+
+function AdvUnit:SetBaseUnit(base_unit) 
+    self.base_unit = base_unit
+    SetStats(self)
 end
 
 -- Gets the stat of the unit (with modifiers) and returns the stat
